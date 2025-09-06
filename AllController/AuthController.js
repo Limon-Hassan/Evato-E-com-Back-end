@@ -3,7 +3,11 @@ const bcrypt = require('bcrypt');
 let jwt = require('jsonwebtoken');
 const sendEmailer = require('../Halper/sendEmail');
 
+<<<<<<< HEAD
 async function registation(req, res, next) {
+=======
+async function registation(req, res) {
+>>>>>>> a4f14cb52bfcad1cbc4fb2db7fdfe6c65c312330
   let { name, email, password } = req.body;
 
   if (!name || !email || !password) {
@@ -42,11 +46,19 @@ async function registation(req, res, next) {
         .send({ msg: 'User Registation succesfull !', data: Users });
     });
   } catch (error) {
+<<<<<<< HEAD
     next(error);
     res.status(500).send({ msg: 'Internal server Error !' });
   }
 }
 async function Adminregistation(req, res, next) {
+=======
+    console.log(error);
+    res.status(500).send({ msg: 'Internal server Error !' });
+  }
+}
+async function Adminregistation(req, res) {
+>>>>>>> a4f14cb52bfcad1cbc4fb2db7fdfe6c65c312330
   let { name, email, password, Roll } = req.body;
 
   if (!name || !email || !password || !Roll) {
@@ -84,6 +96,7 @@ async function Adminregistation(req, res, next) {
         .send({ msg: 'Admin Registation succesfull !', data: Users });
     });
   } catch (error) {
+<<<<<<< HEAD
     next(error);
     res.status(500).send({ msg: 'Internal server Error !' });
   }
@@ -135,6 +148,55 @@ async function login(req, res, next) {
     }
   } catch (error) {
     next(error);
+=======
+    console.log(error);
+    res.status(500).send({ msg: 'Internal server Error !' });
+  }
+}
+async function login(req, res) {
+  let { email, password, Roll } = req.body;
+  let existingUser = await userSchema.findOne({ email });
+  if (existingUser.isVerify === false) {
+    return res.status(400).send({ msg: 'Please verify your email!' });
+  }
+  if (existingUser) {
+    bcrypt.compare(password, existingUser.password, function (err, result) {
+      if (result === true) {
+        const payload = {
+          id: existingUser._id,
+          email: existingUser.email,
+          Role: existingUser.Roll,
+        };
+        var token = jwt.sign({ payload }, process.env.JWT_SECRET, {
+          expiresIn: '1h',
+        });
+        res.cookie(
+          existingUser.Roll === 'admin' ? 'adminToken' : 'userToken',
+          token,
+          {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 60 * 60 * 1000,
+          }
+        );
+
+        return res.status(200).send({
+          token: token,
+          msg:
+            existingUser.Roll === 'admin'
+              ? 'Admin Login Successfull !'
+              : 'User Login Sucessfull !',
+          role: existingUser.Roll,
+          userId: existingUser._id,
+        });
+      } else {
+        return res.status(404).send({ msg: 'Invaild Password !' });
+      }
+    });
+  } else {
+    return res.send('ai email a kono user nai');
+>>>>>>> a4f14cb52bfcad1cbc4fb2db7fdfe6c65c312330
   }
 }
 async function alluser(req, res) {
@@ -149,7 +211,11 @@ async function alluser(req, res) {
       .send({ msg: 'Token expired or invalid. Please log in again.' });
   }
 }
+<<<<<<< HEAD
 async function adminUsers(req, res, next) {
+=======
+async function adminUsers(req, res) {
+>>>>>>> a4f14cb52bfcad1cbc4fb2db7fdfe6c65c312330
   try {
     if (req.user.Role === 'admin') {
       let users = await userSchema.find({ Roll: 'user' }).select('-password');
@@ -161,7 +227,11 @@ async function adminUsers(req, res, next) {
         .send({ msg: 'Unauthorized: Only admin can access this.' });
     }
   } catch (err) {
+<<<<<<< HEAD
     next(err);
+=======
+    console.error(err);
+>>>>>>> a4f14cb52bfcad1cbc4fb2db7fdfe6c65c312330
     return res.status(500).send({ msg: 'Server error' });
   }
 }

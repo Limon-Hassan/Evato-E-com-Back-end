@@ -9,10 +9,13 @@ const {
 } = require('../../AllController/productController');
 const { ErrorCheck } = require('../../Halper/ErrorCheck');
 const { searchProducts } = require('../../AllController/searchController');
+<<<<<<< HEAD
 const {
   makeReviews,
   getReviews,
 } = require('../../AllController/reviewController');
+=======
+>>>>>>> a4f14cb52bfcad1cbc4fb2db7fdfe6c65c312330
 let router = express.Router();
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -49,8 +52,11 @@ router.post(
   ErrorCheck,
   Createproducts
 );
+<<<<<<< HEAD
 router.post('/CreateReviews', ErrorCheck, makeReviews);
 router.get('/getReviews', ErrorCheck, getReviews);
+=======
+>>>>>>> a4f14cb52bfcad1cbc4fb2db7fdfe6c65c312330
 router.get('/product/search', ErrorCheck, searchProducts);
 router.get('/GetProducts', ErrorCheck, readProduct);
 router.patch(

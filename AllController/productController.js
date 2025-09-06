@@ -56,6 +56,7 @@ async function readProduct(req, res, next) {
   }
 }
 
+<<<<<<< HEAD
 async function topProducts(req, res, next) {
   try {
     const topProducts = await productScema
@@ -78,6 +79,8 @@ async function topProducts(req, res, next) {
   }
 }
 
+=======
+>>>>>>> a4f14cb52bfcad1cbc4fb2db7fdfe6c65c312330
 async function updateProducts(req, res, next) {
   let { id } = req.params;
   let {
@@ -117,7 +120,11 @@ async function updateProducts(req, res, next) {
       data: updateProduct,
     });
   } catch (error) {
+<<<<<<< HEAD
     next(error);
+=======
+    console.log(error);
+>>>>>>> a4f14cb52bfcad1cbc4fb2db7fdfe6c65c312330
     return res.status(500).send({ msg: 'server Error !' });
   }
 }
@@ -156,6 +163,7 @@ async function DeleteProduct(req, res, next) {
   }
 }
 
+<<<<<<< HEAD
 module.exports = {
   Createproducts,
   readProduct,
@@ -163,3 +171,6 @@ module.exports = {
   topProducts,
   DeleteProduct,
 };
+=======
+module.exports = { Createproducts, readProduct, updateProducts, DeleteProduct };
+>>>>>>> a4f14cb52bfcad1cbc4fb2db7fdfe6c65c312330
